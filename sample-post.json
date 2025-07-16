@@ -1,0 +1,32 @@
+{
+  "$schema": "/mediawiki/recentchange/1.0.0",
+  "meta": {
+    "uri": "https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%BC%D0%B5%D0%B6%D1%83%D1%82%D0%BE%D1%87%D0%BD%D1%8B%D0%B9_%D0%BF%D0%B0%D1%82%D1%80%D0%BE%D0%BD",
+    "request_id": "240e1287-71cd-421f-ad8d-f0b5b5d5eece",
+    "id": "a885eed5-9ca8-4660-bf2a-b144319c036d",
+    "dt": "2025-07-16T10:14:17Z",
+    "domain": "ru.wikipedia.org",
+    "stream": "mediawiki.recentchange",
+    "topic": "eqiad.mediawiki.recentchange",
+    "partition": 0,
+    "offset": 5760483827
+  },
+  "id": 512464570,
+  "type": "edit",
+  "namespace": 0,
+  "title": "Промежуточный патрон",
+  "title_url": "https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%BC%D0%B5%D0%B6%D1%83%D1%82%D0%BE%D1%87%D0%BD%D1%8B%D0%B9_%D0%BF%D0%B0%D1%82%D1%80%D0%BE%D0%BD",
+  "comment": "замена имён и значений устаревшего неподдерживаемого InternetArchiveBot формата параметров доступности ссылок (1), замена устаревших имён параметров (4)",
+  "timestamp": 1752660857,
+  "user": "Alex NB OT",
+  "bot": true,
+  "notify_url": "https://ru.wikipedia.org/w/index.php?diff=146182156&oldid=141801395",
+  "minor": true,
+  "length": { "old": 20331, "new": 20338 },
+  "revision": { "old": 141801395, "new": 146182156 },
+  "server_url": "https://ru.wikipedia.org",
+  "server_name": "ru.wikipedia.org",
+  "server_script_path": "/w",
+  "wiki": "ruwiki",
+  "parsedcomment": "замена имён и значений устаревшего неподдерживаемого InternetArchiveBot формата параметров доступности ссылок (1), замена устаревших имён параметров (4)"
+}
