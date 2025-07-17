@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { Injectable, OnModuleInit, OnModuleDestroy, Logger } from '@nestjs/common';
 import { EventSource } from 'eventsource';
 import { ConfigService } from '@nestjs/config';
 import { KafkaService } from '../kafka/kafka.service'
@@ -6,7 +6,7 @@ import { WikiPostDto } from '../kafka/models/wikipost'
 
 @Injectable()
 export class SseclientService implements OnModuleInit, OnModuleDestroy {
-  constructor(private readonly kafkaService: KafkaService, private readonly configService: ConfigService) { }
+  constructor(private readonly kafkaService: KafkaService, private readonly configService: ConfigService, private readonly logger: Logger) { }
   private eventSource: EventSource;
 
   onModuleInit() {
@@ -19,12 +19,12 @@ export class SseclientService implements OnModuleInit, OnModuleDestroy {
     };
 
     this.eventSource.onerror = (err) => {
-      console.error('SSE Error:', err);
+      this.logger.error('SSE Error:', err);
     };
   }
 
   onModuleDestroy() {
     this.eventSource?.close();
-    console.log('SSE connection closed');
+    this.logger.log('SSE connection closed');
   }
 }

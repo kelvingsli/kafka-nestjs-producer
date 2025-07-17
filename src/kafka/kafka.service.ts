@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { Injectable, OnModuleInit, OnModuleDestroy, Logger } from '@nestjs/common';
 import { KafkaJS } from '@confluentinc/kafka-javascript';
 import { ConfigService } from '@nestjs/config';
 import { WikiPostDto } from './models/wikipost'
@@ -6,7 +6,7 @@ import { WikiPostDto } from './models/wikipost'
 @Injectable()
 export class KafkaService implements OnModuleInit, OnModuleDestroy {
 
-  constructor(private readonly configService: ConfigService) { }
+  constructor(private readonly configService: ConfigService, private readonly logger: Logger) { }
   private producer: KafkaJS.Producer;
 
   async onModuleInit() {
@@ -14,12 +14,12 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
       'bootstrap.servers': this.configService.get<string>('KAFKA_BROKER_URL'),
     });
     await this.producer.connect();
-    console.log("Connected successfully");
+    this.logger.log("Connected successfully");
   }
 
   async onModuleDestroy() {
     await this.producer.disconnect();
-    console.log("Disconnected successfully");
+    this.logger.log("Disconnected successfully");
   }
 
 
@@ -41,8 +41,8 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
   async putWikiPost(key: string, value: WikiPostDto) {
     const valueStr = JSON.stringify(value);
 
-    console.log(`key is ${key}`);
-    console.log(`value is ${valueStr}`);
+    this.logger.log(`key is ${key}`);
+    this.logger.log(`value is ${valueStr}`);
 
     const res: any[] = [];
 
