@@ -1,17 +1,16 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-const { Kafka } = require('@confluentinc/kafka-javascript').KafkaJS;
-
-import { WikiPostDto } from './models/wikipost'
+import { KafkaJS } from '@confluentinc/kafka-javascript';
 import { ConfigService } from '@nestjs/config';
+import { WikiPostDto } from './models/wikipost'
 
 @Injectable()
 export class KafkaService implements OnModuleInit, OnModuleDestroy {
 
   constructor(private readonly configService: ConfigService) { }
-  private producer;
+  private producer: KafkaJS.Producer;
 
   async onModuleInit() {
-    this.producer = new Kafka().producer({
+    this.producer = new KafkaJS.Kafka().producer({
       'bootstrap.servers': this.configService.get<string>('KAFKA_BROKER_URL'),
     });
     await this.producer.connect();

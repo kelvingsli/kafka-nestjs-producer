@@ -1,8 +1,8 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { EventSource } from 'eventsource';
+import { ConfigService } from '@nestjs/config';
 import { KafkaService } from '../kafka/kafka.service'
 import { WikiPostDto } from '../kafka/models/wikipost'
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SseclientService implements OnModuleInit, OnModuleDestroy {
@@ -10,7 +10,7 @@ export class SseclientService implements OnModuleInit, OnModuleDestroy {
   private eventSource: EventSource;
 
   onModuleInit() {
-    this.eventSource = new EventSource(this.configService.get<string>('STREAM_URL') || '');
+    this.eventSource = new EventSource(this.configService.get<string>('STREAM_URL') ?? '');
 
     this.eventSource.onmessage = (event) => {
       const eventPost = JSON.parse(event.data);
