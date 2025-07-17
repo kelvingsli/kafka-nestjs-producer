@@ -7,4 +7,4 @@ import { KafkaModule } from 'src/kafka/kafka.module';
   providers: [SseclientService],
   imports: [KafkaModule]
 })
-export class SseclientModule {}
+export class SseclientModule { }

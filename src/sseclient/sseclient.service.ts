@@ -2,14 +2,15 @@ import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { EventSource } from 'eventsource';
 import { KafkaService } from '../kafka/kafka.service'
 import { WikiPostDto } from '../kafka/models/wikipost'
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SseclientService implements OnModuleInit, OnModuleDestroy {
-  constructor(private readonly kafkaService: KafkaService) {}
+  constructor(private readonly kafkaService: KafkaService, private readonly configService: ConfigService) { }
   private eventSource: EventSource;
 
   onModuleInit() {
-    this.eventSource = new EventSource('https://stream.wikimedia.org/v2/stream/recentchange');
+    this.eventSource = new EventSource(this.configService.get<string>('STREAM_URL') || '');
 
     this.eventSource.onmessage = (event) => {
       const eventPost = JSON.parse(event.data);
