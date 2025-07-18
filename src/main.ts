@@ -6,7 +6,6 @@ import 'winston-daily-rotate-file';
 
 import { AppModule } from './app.module';
 
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: WinstonModule.createLogger({
@@ -40,7 +39,7 @@ async function bootstrap() {
           ),
         }),
       ],
-    })
+    }),
   });
   app.enableShutdownHooks();
   const config = new DocumentBuilder()

@@ -6,8 +6,12 @@ import { KafkaModule } from './kafka/kafka.module';
 import { SseclientModule } from './sseclient/sseclient.module';
 
 @Module({
-  imports: [KafkaModule, SseclientModule, ConfigModule.forRoot({ isGlobal: true })],
+  imports: [
+    KafkaModule,
+    SseclientModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

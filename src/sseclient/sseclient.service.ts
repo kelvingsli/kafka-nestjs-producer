@@ -1,20 +1,39 @@
-import { Injectable, OnModuleInit, OnModuleDestroy, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  Inject,
+  OnModuleInit,
+  OnModuleDestroy,
+  Logger,
+} from '@nestjs/common';
 import { EventSource } from 'eventsource';
 import { ConfigService } from '@nestjs/config';
-import { KafkaService } from '../kafka/kafka.service'
-import { WikiPostDto } from '../kafka/models/wikipost'
+import { IKafkaService } from '../kafka/kafka.interface';
+import { WikiPostDto } from '../kafka/models/wikipost.dto';
+import { IWikiPost } from '../kafka/models/wikipost.dto.interface';
 
 @Injectable()
 export class SseclientService implements OnModuleInit, OnModuleDestroy {
-  constructor(private readonly kafkaService: KafkaService, private readonly configService: ConfigService, private readonly logger: Logger) { }
+  constructor(
+    @Inject('IKafkaService') private readonly kafkaService: IKafkaService,
+    private readonly configService: ConfigService,
+    private readonly logger: Logger,
+  ) {}
   private eventSource: EventSource;
 
   onModuleInit() {
-    this.eventSource = new EventSource(this.configService.get<string>('STREAM_URL') ?? '');
+    this.eventSource = new EventSource(
+      this.configService.get<string>('STREAM_URL') ?? '',
+    );
 
     this.eventSource.onmessage = (event) => {
       const eventPost = JSON.parse(event.data);
-      const newPost = new WikiPostDto(eventPost.id, eventPost.title, eventPost.title_url, new Date(eventPost.timestamp), eventPost.source);
+      const newPost: IWikiPost = new WikiPostDto(
+        eventPost.id,
+        eventPost.title,
+        eventPost.title_url,
+        new Date(eventPost.timestamp),
+        eventPost.source,
+      );
       this.kafkaService.putWikiPost(newPost.id, newPost);
     };
 
