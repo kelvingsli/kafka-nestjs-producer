@@ -32,7 +32,7 @@ export class SseclientService implements OnModuleInit, OnModuleDestroy {
         eventPost.title,
         eventPost.title_url,
         new Date(eventPost.timestamp),
-        eventPost.source,
+        eventPost.wiki,
       );
       this.kafkaService.putWikiPost(newPost.id, newPost);
     };
